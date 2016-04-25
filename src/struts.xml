@@ -57,7 +57,13 @@
 	    </action>
 	     -->
 	     
+	   <!--   <action name="Equipment_add" class="heatsupply.action.EquipmentAction" method="add">
+	        <result name="show_map">/Map_show.jsp</result>
+	    </action>  
+	    -->
+	    
 	    <action name="*_*" class="heatsupply.action.{1}Action" method="{2}">
+	        <result name="show_map">/Map_show.jsp</result>
 	        <result>/{1}_{2}.jsp</result>
 	        <result name="input">/{1}_{2}.jsp</result>
 	    </action>

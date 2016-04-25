@@ -1,6 +1,6 @@
 package heatsupply.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Equipment {
 	private int id;

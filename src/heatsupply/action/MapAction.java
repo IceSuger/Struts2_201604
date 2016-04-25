@@ -68,12 +68,6 @@ public class MapAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
-	public String addInput(){
-		
-		//sensorService.add(sensor);
-		return INPUT;
-	}
-
 
 	public String show(){
 		return SUCCESS;

@@ -52,7 +52,8 @@ public class EquipmentAction extends ActionSupport {
 
 	public String add(){
 		equipmentService.add(equipment);
-		return SUCCESS;
+		System.out.println("show_map");
+		return "show_map";
 	}
 	
 	public String list(){
@@ -71,8 +72,8 @@ public class EquipmentAction extends ActionSupport {
 	}
 	
 	public String addInput(){
-		
+		System.out.println("addInput");
 		//equipmentService.add(equipment);
-		return INPUT;
+		return "show_map";
 	}
 }

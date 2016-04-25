@@ -17,10 +17,11 @@ public class EquipmentService {
 		String sql = "insert into _equipments values (null, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = DB.prepare(conn, sql);
 		try {
+			System.out.println("show_map------doing sql");
 			ps.setInt(1, eq.getBuilding_id());
 			//ps.setString(2, "GeomFromText('POINT(" + eq.getLatitude() + " " + eq.getLongitude() + ")')" );//程序中经纬度都先用String类型
-			ps.setString(2, eq.getLatitude());
-			ps.setString(3, eq.getLongitude());
+			ps.setString(2, eq.getLongitude());
+			ps.setString(3, eq.getLatitude());
 			ps.setFloat(4, eq.getHigh_limit());
 			ps.setFloat(5, eq.getLow_limit());
 			ps.setDate(6, (Date) eq.getDate());

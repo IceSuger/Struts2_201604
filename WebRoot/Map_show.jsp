@@ -204,6 +204,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="content" class="col-lg-10 col-sm-10">
             <!-- content starts -->
                 
+                <div style ="color:red">
+    <s:fielderror />
+</div>
     <div class="row">
         <div class="box col-md-12">
             <div class="box-inner">
@@ -243,7 +246,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <h3>添加节点</h3>
                 </div>
                 <div class="modal-body">
-                <form action="Equipment_add" method="post">
+                <form id="equip-add-form" action="Equipment_add" method="post">
                     <table>
                     <tr><td>所在建筑</td> <td>???</td></tr>
                     <tr><td>经度(longitude)</td> <td><input type="text" id="lng-input" name="equipment.longitude"></td></tr>
@@ -253,12 +256,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr><td>低温报警线</td> <td><input type="text" value="10.0" name="equipment.low_limit"> ℃</td></tr>
 					<tr><td>节点部署日期</td> <td><input type="text" id="date-input" name="equipment.date"></td></tr>
                     </table>
+                </form>
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
-                    <input class="btn btn-primary" data-dismiss="modal" type="submit" value="确定添加" />
+                    <a id="equip-add-btn" class="btn btn-primary" data-dismiss="modal" value="" >确定添加</a>
                 </div>
-                </form>
+                
             </div>
         </div>
     </div>
@@ -485,8 +489,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		map.removeEventListener("click", addSensor);
 		$('#lng-input').val(e.point.lng);
 		$('#lat-input').val(e.point.lat);
-		var myDate = new Date();
-		$('#date-input').val(myDate.toLocaleString());
+		$('#date-input').val(getNowFormatDate());
 		$('#sensorAdd').modal('show');
 	}
     $('.sensor-add-click-map').click(function (e) {
@@ -494,8 +497,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         map.addEventListener("click", addSensor);
     });
     
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate
+                + " " + date.getHours() + seperator2 + date.getMinutes()
+                + seperator2 + date.getSeconds();
+        return currentdate;
+    }
 	
 </script>
 
+<script type="text/javascript">
+$('#equip-add-btn').click(function(){
+	$('#equip-add-form').submit();
+});
+</script>
 </body>
 </html>
