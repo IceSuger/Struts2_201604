@@ -6,7 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.google.gson.Gson;
 
 import heatsupply.model.Equipment;
 import heatsupply.util.DB;
@@ -97,4 +101,37 @@ public class EquipmentService {
 		DB.close(ps);
 		DB.close(conn);*/
 	}
+	
+	public List<Object> listPoints(){
+		Connection conn = DB.createConn();
+		String sql = "select * from _equipments";
+		PreparedStatement ps = DB.prepare(conn, sql);
+		List<Equipment> equipments = new ArrayList<Equipment>();
+		List<Object> points = new ArrayList<Object>();
+		Gson gson = new Gson();
+		
+		try {
+			ResultSet rs =  ps.executeQuery();
+			Equipment eq = null;
+			while(rs.next()){
+				Map<String,String> map = new HashMap<String,String>();
+				map.put("id", String.valueOf(rs.getInt("id")));
+				map.put("lng", rs.getString("longitude"));
+				map.put("lat", rs.getString("latitude"));
+				map.put("count", String.valueOf((Math.random()*40+60)));
+				//map.put("count", String.valueOf((Math.random()*60-10)));
+				
+				points.add(map);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DB.close(ps);
+		DB.close(conn);
+		//System.out.println(gson.toJson(points).toString());
+		//return gson.toJson(points).toString();
+		return points;
+	}
+	
 }

@@ -245,7 +245,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <i class="glyphicon glyphicon-edit icon-white"></i>
                 修改
             </a>
-            <a class="btn btn-danger" href="#">
+            <a class="btn btn-danger sensor-delete-btn" href="Equipment_delete?id=<s:property value="#e.id"/>">
                 <i class="glyphicon glyphicon-trash icon-white"></i>
                 删除
             </a>
@@ -332,6 +332,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="js/jquery.history.js"></script>
 <!-- application script for Charisma demo -->
 <script src="js/charisma.js"></script>
+
 
 
 </body>

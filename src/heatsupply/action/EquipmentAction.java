@@ -8,6 +8,7 @@ import java.util.List;
 
 
 
+
 import com.opensymphony.xwork2.ActionSupport;
 
 public class EquipmentAction extends ActionSupport {
@@ -15,7 +16,7 @@ public class EquipmentAction extends ActionSupport {
 	private EquipmentService equipmentService = new EquipmentService();
 	private Equipment equipment;
 	private int id;
-	
+	private List<Object> points;
 	
 
 	public List<Equipment> getEquipments() {
@@ -68,9 +69,23 @@ public class EquipmentAction extends ActionSupport {
 	
 	public String delete(){
 		equipmentService.deleteById(id);
-		return SUCCESS;
+		return "equipment_list";
 	}
 	
+	
+	public List<Object> getPoints() {
+		return points;
+	}
+
+	public void setPoints(List<Object> points) {
+		this.points = points;
+	}
+
+	public String listPoints(){
+		points = equipmentService.listPoints();
+		return SUCCESS;
+		//return "return_json";
+	}
 	public String addInput(){
 		System.out.println("addInput");
 		//equipmentService.add(equipment);
