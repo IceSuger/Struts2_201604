@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         ===
     -->
     <meta charset="utf-8">
-    <title>Free HTML5 Bootstrap Admin Template</title>
+    <title>地图（热图）显示-热网温度监测系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
@@ -69,25 +69,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="navbar navbar-default" role="navigation">
 
         <div class="navbar-inner">
-            <button type="button" class="navbar-toggle pull-left animated flip">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html"> <img alt="Charisma Logo" src="img/logo20.png" class="hidden-xs"/>
-                <span>Charisma</span></a>
+            <a class="navbar-brand" href="Map_show"> <img alt="Charisma Logo" src="img/logo20.png" class="hidden-xs"/>
+                热网温度监测系统</a>
 
             <!-- user dropdown starts -->
             <div class="btn-group pull-right">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"> admin</span>
+                    <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"> 管理员</span>
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">用户信息</a></li>
                     <li class="divider"></li>
-                    <li><a href="login.html">Logout</a></li>
+                    <li><a href="login.html">登出</a></li>
                 </ul>
             </div>
             <!-- user dropdown ends -->
@@ -96,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="btn-group pull-right theme-container animated tada">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <i class="glyphicon glyphicon-tint"></i><span
-                        class="hidden-sm hidden-xs"> Change Theme / Skin</span>
+                        class="hidden-sm hidden-xs"> 更换皮肤</span>
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" id="themes">
@@ -113,29 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <!-- theme selector ends -->
 
-            <ul class="collapse navbar-collapse nav navbar-nav top-menu">
-                <li><a href="#"><i class="glyphicon glyphicon-globe"></i> Visit Site</a></li>
-                <li class="dropdown">
-                    <a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-star"></i> Dropdown <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <form class="navbar-search pull-left">
-                        <input placeholder="Search" class="search-query form-control col-md-10" name="query"
-                               type="text">
-                    </form>
-                </li>
-            </ul>
-
+            
         </div>
     </div>
     <!-- topbar ends -->
@@ -150,42 +122,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                     </div>
                     <ul class="nav nav-pills nav-stacked main-menu">
-                        <li class="nav-header">Main</li>
-                        <li><a class="ajax-link" href="index.html"><i class="glyphicon glyphicon-home"></i><span> Dashboard</span></a>
+                        <li class="nav-header">功能列表</li>
+                        <li><a class="ajax-link" href="Map_show"><i class="glyphicon glyphicon-eye-open"></i><span> 地图/热图显示</span></a>
                         </li>
-                        <li><a class="ajax-link" href="ui.html"><i class="glyphicon glyphicon-eye-open"></i><span> UI Features</span></a>
+                        <li><a class="ajax-link" href="Equipment_list"><i
+                                    class="glyphicon glyphicon-align-justify"></i><span> 传感器节点管理</span></a></li>
+                        <li><a class="ajax-link" href="chart.html"><i class="glyphicon glyphicon-list-alt"></i><span> 通信拓扑展示</span></a>
                         </li>
-                        <li><a class="ajax-link" href="form.html"><i
-                                    class="glyphicon glyphicon-edit"></i><span> Forms</span></a></li>
-                        <li><a class="ajax-link" href="chart.html"><i class="glyphicon glyphicon-list-alt"></i><span> Charts</span></a>
+                        <li><a class="ajax-link" href="gallery.html"><i class="glyphicon glyphicon-calendar"></i><span> 报警历史</span></a>
                         </li>
-                        <li><a class="ajax-link" href="typography.html"><i class="glyphicon glyphicon-font"></i><span> Typography</span></a>
+                        <li><a class="ajax-link" href="typography.html"><i class="glyphicon glyphicon-font"></i><span> 用户设置</span></a>
                         </li>
-                        <li><a class="ajax-link" href="gallery.html"><i class="glyphicon glyphicon-picture"></i><span> Gallery</span></a>
-                        </li>
-                        <li class="nav-header hidden-md">Sample Section</li>
-                        <li><a class="ajax-link" href="table.html"><i
-                                    class="glyphicon glyphicon-align-justify"></i><span> Tables</span></a></li>
-                        <li class="accordion">
-                            <a href="#"><i class="glyphicon glyphicon-plus"></i><span> Accordion Menu</span></a>
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Child Menu 1</a></li>
-                                <li><a href="#">Child Menu 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="ajax-link" href="calendar.html"><i class="glyphicon glyphicon-calendar"></i><span> Calendar</span></a>
-                        </li>
-                        <li><a class="ajax-link" href="grid.html"><i
-                                    class="glyphicon glyphicon-th"></i><span> Grid</span></a></li>
-                        <li><a href="tour.html"><i class="glyphicon glyphicon-globe"></i><span> Tour</span></a></li>
-                        <li><a class="ajax-link" href="icon.html"><i
-                                    class="glyphicon glyphicon-star"></i><span> Icons</span></a></li>
-                        <li><a href="error.html"><i class="glyphicon glyphicon-ban-circle"></i><span> Error Page</span></a>
-                        </li>
-                        <li><a href="login.html"><i class="glyphicon glyphicon-lock"></i><span> Login Page</span></a>
-                        </li>
+                        <li><a href="tour.html"><i class="glyphicon glyphicon-globe"></i><span> 使用向导</span></a></li>
                     </ul>
-                    <label id="for-is-ajax" for="is-ajax"><input id="is-ajax" type="checkbox"> Ajax on menu</label>
+                    
                 </div>
             </div>
         </div>
@@ -215,10 +165,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                     <div class="box-icon">
                     	<button class="btn btn-info btn-sm sensor-add-click-map">添加节点</button>
-                        <a href="#" class="btn btn-setting btn-round btn-default"><i
-                                class="glyphicon glyphicon-cog"></i></a>
-                        <a href="#" class="btn btn-minimize btn-round btn-default"><i
-                                class="glyphicon glyphicon-chevron-up"></i></a>
+                    	<button class="btn btn-info btn-sm show-or-hide-all-markers">隐藏节点标记</button>
+                    	<button class="btn btn-info btn-sm show-or-hide-heatmap">隐藏热图</button>
                     </div>
                 </div>
                 <div class="box-content" id="map-container">
@@ -289,11 +237,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <!-- 原版的设置dialog结束 -->
     <footer class="row">
-        <p class="col-md-9 col-sm-9 col-xs-12 copyright">&copy; <a href="http://usman.it" target="_blank">Muhammad
-                Usman</a> 2012 - 2015</p>
-
-        <p class="col-md-3 col-sm-3 col-xs-12 powered-by">Powered by: <a
-                href="http://usman.it/free-responsive-admin-template">Charisma</a></p>
     </footer>
 
 </div><!--/.fluid-container-->
@@ -339,25 +282,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
     var map = new BMap.Map("map-container");          // 创建地图实例
     var point = new BMap.Point(116.418261, 39.921984);
-    map.centerAndZoom(point, 15);             // 初始化地图，设置中心点坐标和地图级别
+    var markers = [];//保存全部的markers的引用，用于同时隐藏/显示它们
+    var show_Heatmap = true;//布尔型量，表示当前页面上是否显示热图
+    var show_markers = true;//布尔型量，表示当前页面上是否显示markers
+    map.centerAndZoom(point, 16);             // 初始化地图，设置中心点坐标和地图级别
     map.enableScrollWheelZoom(); // 允许滚轮缩放
     if(!isSupportCanvas()){
-        alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+        alert('请在chrome、safari、IE8+以上浏览器使用本系统。')
     }
-    //详细的参数,可以查看heatmap.js的文档 https://github.com/pa7/heatmap.js/blob/master/README.md
-    //参数说明如下:
-    /* visible 热力图是否显示,默认为true
-     * opacity 热力的透明度,1-100
-     * radius 势力图的每个点的半径大小
-     * gradient  {JSON} 热力图的渐变区间 . gradient如下所示
-     *	{
-     .2:'rgb(0, 255, 255)',
-     .5:'rgb(0, 110, 255)',
-     .8:'rgb(100, 0, 255)'
-     }
-     其中 key 表示插值的位置, 0~1.
-     value 为颜色值.
-     */
     heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":20});
     map.addOverlay(heatmapOverlay);
   //通过ajax，从服务器获取所有节点的数据（经纬度、温度、节点id）
@@ -372,6 +304,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            console.log(data);
            //points = data.points;
            heatmapOverlay.setDataSet({data:data.points,max:100});
+           displayMarkerOfSensors(data);
        }
    });
     //heatmapOverlay.setDataSet({data:points,max:100});
@@ -403,7 +336,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         var elem = document.createElement('canvas');
         return !!(elem.getContext && elem.getContext('2d'));
     }
-    //点击地图，获取点击处的经纬度
+ 	// 编写自定义函数,放置节点，并创建标注
+	function addMarker(point){
+ 		//console.log(point.id+" lng:"+point.lng+" lat:"+point.lat);
+      //point 是json中 points里的一个元素
+	  var marker = new BMap.Marker(new BMap.Point(point.lng,point.lat));
+      //console.log(marker);
+	  
+	  //var label = new BMap.Label(point.count, {offset:new BMap.Size(20,-10)});
+	 // marker.setLabel(label);
+	  marker.addEventListener('click',function(){
+		  alert(point.id);
+	  });
+	  map.addOverlay(marker);
+	  markers.push(marker);
+	}
+  	//放置传感器节点marker
+    function displayMarkerOfSensors(data){
+    	
+        for (var i = 0; i < data.points.length; i++) {
+          //points.push(new BMap.Point(data.points[i][3], data.points[i][2]));
+          addMarker(data.points[i]);
+        }
+    }
+    //点击地图，获取点击处的经纬度，弹出添加节点的dialog
 	function addSensor(e){
 		//alert(e.point.lng + ", " + e.point.lat);
 		map.removeEventListener("click", addSensor);
@@ -416,7 +372,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         e.preventDefault();
         map.addEventListener("click", addSensor);
     });
-    
+    $('.show-or-hide-all-markers').click(function(){
+    	if(show_markers == true){
+    		show_markers = false;
+    		$('.show-or-hide-all-markers').text('显示节点标记');
+    		hideMarkers();
+    	}else{
+    		show_markers = true;
+    		$('.show-or-hide-all-markers').text('隐藏节点标记');
+    		showMarkers();
+    	}
+    });
+    $('.show-or-hide-heatmap').click(function(){
+    	if(show_Heatmap == true){
+    		show_Heatmap = false;
+    		$('.show-or-hide-heatmap').text('显示热图');
+    		closeHeatmap();
+    	}else{
+    		show_Heatmap = true;
+    		$('.show-or-hide-heatmap').text('隐藏热图');
+    		openHeatmap();
+    	}
+    });
+    //获取当前日期（用于填入节点添加的对话框）
     function getNowFormatDate() {
         var date = new Date();
         var seperator1 = "-";
@@ -434,6 +412,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 + " " + date.getHours() + seperator2 + date.getMinutes()
                 + seperator2 + date.getSeconds();
         return currentdate;
+    }
+    
+    //是否显示markers
+    function showMarkers(){
+    	for(i in markers){
+    		markers[i].show();
+    	}
+    }
+    function hideMarkers(){
+    	for(i in markers){
+    		markers[i].hide();
+    	}
     }
 	
 </script>
