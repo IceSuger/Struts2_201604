@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   <form action="Sensor_add" method="post">
-    equipment id: <input name="sensor.equipment_id" />
+    Sensor id: <input name="sensor.Sensor_id" />
     <input type="submit" value="add" />
   </form>
   </body>

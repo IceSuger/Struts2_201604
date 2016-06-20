@@ -1,26 +1,36 @@
 package heatsupply.model;
 
-import java.sql.Date;
+//import java.sql.Date;
+import java.util.Date;
 
-public class Equipment {
-	private int id;
-	private int building_id;
+public class Sensor {
+	//private int id;
+	private String building_id;
 	private String latitude;
 	private String longitude;
 	private float high_limit;
 	private float low_limit;
 	private Date date;
+	private String position_detail;
+	private int level;
 	
-	public int getId() {
-		return id;
+	public int getLevel() {
+		return level;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setLevel(int level) {
+		this.level = level;
 	}
-	public int getBuilding_id() {
+	public String getPosition_detail() {
+		return position_detail;
+	}
+	public void setPosition_detail(String position_detail) {
+		this.position_detail = position_detail;
+	}
+	
+	public String getBuilding_id() {
 		return building_id;
 	}
-	public void setBuilding_id(int building_id) {
+	public void setBuilding_id(String building_id) {
 		this.building_id = building_id;
 	}
 	

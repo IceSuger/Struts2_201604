@@ -119,11 +119,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <li class="nav-header">功能列表</li>
                         <li><a class="ajax-link" href="Map_show"><i class="glyphicon glyphicon-eye-open"></i><span> 地图/热图显示</span></a>
                         </li>
-                        <li><a class="ajax-link" href="Equipment_list"><i
+                        <li><a class="ajax-link" href="Sensor_list"><i
                                     class="glyphicon glyphicon-align-justify"></i><span> 传感器节点管理</span></a></li>
-                        <li><a class="ajax-link" href="chart.html"><i class="glyphicon glyphicon-list-alt"></i><span> 通信拓扑展示</span></a>
+                        <li><a class="ajax-link" href="Alarm_list"><i class="glyphicon glyphicon-calendar"></i><span> 报警历史</span></a>
                         </li>
-                        <li><a class="ajax-link" href="gallery.html"><i class="glyphicon glyphicon-calendar"></i><span> 报警历史</span></a>
+						<li class="accordion">
+                            <a href="#"><i class="glyphicon glyphicon-plus"></i><span> 统计分析</span></a>
+                            <ul class="nav nav-pills nav-stacked">
+								<li><a href="#">热源相关统计分析</a></li>
+								<li><a href="#">用户用热计费</a></li>
+                                <li><a href="#">失水失热分析</a></li>
+                                <li><a href="#">供热能效评价</a></li>
+                            </ul>
                         </li>
                         <li><a class="ajax-link" href="typography.html"><i class="glyphicon glyphicon-font"></i><span> 用户设置</span></a>
                         </li>
@@ -162,26 +169,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
     <thead>
     <tr>
-        <th>节点id</th>
-        <th>节点部署建筑</th>
+        <th>节点真实id</th>
         <th>节点部署纬度</th>
         <th>节点部署经度</th>
+		<th>管网层级</th>
 		<th>高温报警线</th>
 		<th>低温报警线</th>
 		<th>部署日期</th>
+		<th>部署位置详情</th>
         <th>操作</th>
     </tr>
 	</thead>
 	<tbody>
-	<s:iterator value="equipments" var="e">
+	<s:iterator value="sensors" var="e">
     <tr>
-        <td><s:property value="#e.id" /></td>
-        <td class="center"><s:property value="#e.building_name" /></td>
+        <td class="center"><s:property value="#e.building_id" /></td>
         <td class="center"><s:property value="#e.latitude" /></td>
 		<td class="center"><s:property value="#e.longitude" /></td>
+		<td class="center"><s:property value="#e.level" /></td>
 		<td class="center"><s:property value="#e.high_limit" /></td>
 		<td class="center"><s:property value="#e.low_limit" /></td>
 		<td class="center"><s:property value="#e.date" /></td>
+		<td class="center"><s:property value="#e.position_detail" /></td>
         <td class="center">
             <a class="btn btn-success" href="#">
                 <i class="glyphicon glyphicon-zoom-in icon-white"></i>
@@ -191,7 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <i class="glyphicon glyphicon-edit icon-white"></i>
                 修改
             </a>
-            <a class="btn btn-danger sensor-delete-btn" href="Equipment_delete?id=<s:property value="#e.id"/>">
+            <a class="btn btn-danger sensor-delete-btn" href="Sensor_delete?building_id=<s:property value="#e.building_id"/>">
                 <i class="glyphicon glyphicon-trash icon-white"></i>
                 删除
             </a>
@@ -274,7 +283,46 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- application script for Charisma demo -->
 <script src="js/charisma.js"></script>
 
+<script type="text/javascript">
+//定时向后台请求alarm数据
+var reasons = [];
+reasons.push("Not alarm");
+reasons.push("超过高温限制");
+reasons.push("超过低温限制");
 
+var alarm_reported=[];
+function fetch_alarms(){
+	$.ajax({
+        url: "Alarm_fetch"
+       , type: "GET"
+       , success: function( data0, textStatus, jqXHR ){
+           // data0 是返回的数据
+           // textStatus 可能为"success"、"notmodified"等
+           // jqXHR 是经过jQuery封装的XMLHttpRequest对象
+		   //console.log(data0.alarms);
+				if(data0.alarms.length > 0)
+				{
+				//console.log('有报警信息');
+				//console.log(data0.alarms.length);
+					//说明有报警信息，循环对每个报警信息都生成一个noty
+					for(var i=0; i<data0.alarms.length; i++)
+					{
+						if( $.inArray(data0.alarms[i].id, alarm_reported) == -1 )
+						{
+							options.layout = "bottomLeft";
+							options.type = "error";
+							options.text = "节点("+ data0.alarms[i].sensor_id +") " + reasons[data0.alarms[i].reason] + ", 时间为 "+ data0.alarms[i].time + " 温度为: "+data0.alarms[i].t +" !";
+							//console.log(options.text);
+							noty(options);
+							alarm_reported.push(data0.alarms[i].id);
+						}
+					}
+				}
+		   }
+	});
+}
+setInterval("fetch_alarms();",2000);
+</script>
 
 </body>
 </html>

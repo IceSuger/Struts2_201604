@@ -1,7 +1,7 @@
 package heatsupply.action;
 
-import heatsupply.model.Equipment;
-import heatsupply.service.EquipmentService;
+import heatsupply.model.Sensor;
+import heatsupply.service.SensorService;
 
 import java.util.List;
 
@@ -9,67 +9,93 @@ import java.util.List;
 
 
 
+
 import com.opensymphony.xwork2.ActionSupport;
 
-public class EquipmentAction extends ActionSupport {
-	private List<Equipment> equipments;
-	private EquipmentService equipmentService = new EquipmentService();
-	private Equipment equipment;
-	private int id;
+public class SensorAction extends ActionSupport {
+	private List<Sensor> Sensors;
+	private SensorService SensorService = new SensorService();
+	private Sensor Sensor;
+	
 	private List<Object> points;
+	private List<String> unusedIds;
+	private String building_id;
+	private int level;
 	
 
-	public List<Equipment> getEquipments() {
-		return equipments;
+	public int getLevel() {
+		return level;
 	}
 
-	public void setEquipments(List<Equipment> equipments) {
-		this.equipments = equipments;
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
-	public EquipmentService getEquipmentService() {
-		return equipmentService;
+	public List<String> getUnusedIds() {
+		return unusedIds;
 	}
 
-	public void setEquipmentService(EquipmentService equipmentService) {
-		this.equipmentService = equipmentService;
+	public void setUnusedIds(List<String> unusedIds) {
+		this.unusedIds = unusedIds;
 	}
 
-	public Equipment getEquipment() {
-		return equipment;
+	public List<Sensor> getSensors() {
+		return Sensors;
 	}
 
-	public void setEquipment(Equipment equipment) {
-		this.equipment = equipment;
+	public void setSensors(List<Sensor> Sensors) {
+		this.Sensors = Sensors;
 	}
 
-	public int getId() {
-		return id;
+	public SensorService getSensorService() {
+		return SensorService;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setSensorService(SensorService SensorService) {
+		this.SensorService = SensorService;
+	}
+
+	public Sensor getSensor() {
+		return Sensor;
+	}
+
+	public void setSensor(Sensor Sensor) {
+		this.Sensor = Sensor;
+	}
+
+	public String getBuilding_id() {
+		return building_id;
+	}
+
+	public void setBuilding_id(String building_id) {
+		this.building_id = building_id;
 	}
 
 	public String add(){
-		equipmentService.add(equipment);
+		SensorService.add(Sensor);
 		System.out.println("show_map");
 		return "show_map";
 	}
 	
+	public String find(){
+		Sensor = SensorService.find(building_id);
+		return SUCCESS;
+	}
+	
 	public String list(){
-		equipments = equipmentService.list();
+		Sensors = SensorService.list();
 		return SUCCESS;
 	}
 	
 	public String update(){
-		equipmentService.update(equipment);
+		SensorService.update(Sensor);
 		return SUCCESS;
 	}
 	
 	public String delete(){
-		equipmentService.deleteById(id);
-		return "equipment_list";
+		System.out.println("DELETE: "+building_id);
+		SensorService.deleteById(building_id);
+		return "Sensor_list";
 	}
 	
 	
@@ -82,13 +108,19 @@ public class EquipmentAction extends ActionSupport {
 	}
 
 	public String listPoints(){
-		points = equipmentService.listPoints();
+		points = SensorService.listPoints(level);
 		return SUCCESS;
 		//return "return_json";
 	}
 	public String addInput(){
 		System.out.println("addInput");
-		//equipmentService.add(equipment);
+		//SensorService.add(Sensor);
 		return "show_map";
+	}
+	
+	public String listUnusedIds(){
+		unusedIds = SensorService.listUnusedIds();
+		System.out.println(unusedIds);
+		return SUCCESS;
 	}
 }

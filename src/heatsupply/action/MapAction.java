@@ -45,29 +45,29 @@ public class MapAction extends ActionSupport {
 		this.id = id;
 	}
 
-	public String add(){
-		System.out.println("id=" + sensor.getId());
-		System.out.println("equipment_id=" + sensor.getEquipment_id());
-		//System.out.println("equipment_id=" + sensor.equipment_id);
-		sensorService.add(sensor);
-		return SUCCESS;
-	}
-	
-	public String list(){
-		sensors = sensorService.list();
-		return SUCCESS;
-	}
-	
-	public String update(){
-		sensorService.update(sensor);
-		return SUCCESS;
-	}
-	
-	public String delete(){
-		sensorService.deleteById(id);
-		return SUCCESS;
-	}
-	
+//	public String add(){
+//		System.out.println("id=" + sensor.getId());
+//		System.out.println("Sensor_id=" + sensor.getSensor_id());
+//		//System.out.println("Sensor_id=" + sensor.Sensor_id);
+//		sensorService.add(sensor);
+//		return SUCCESS;
+//	}
+//	
+//	public String list(){
+//		sensors = sensorService.list();
+//		return SUCCESS;
+//	}
+//	
+//	public String update(){
+//		sensorService.update(sensor);
+//		return SUCCESS;
+//	}
+//	
+//	public String delete(){
+//		sensorService.deleteById(id);
+//		return SUCCESS;
+//	}
+//	
 
 	public String show(){
 		return SUCCESS;

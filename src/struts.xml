@@ -52,9 +52,25 @@
     </package>
     
 	<package name="json" namespace="/" extends="json-default">
-	     <action name="Equipment_listPoints" class="heatsupply.action.EquipmentAction" method="listPoints">
+	     <action name="Sensor_listPoints" class="heatsupply.action.SensorAction" method="listPoints">
 	        <result type="json"></result>
 	    </action>
+	    <action name="Sensor_find" class="heatsupply.action.SensorAction" method="find">
+	        <result type="json"></result>
+	    </action>
+	    <action name="Sensor_listUnusedIds" class="heatsupply.action.SensorAction" method="listUnusedIds">
+	        <result type="json"></result>
+	    </action>
+	    <action name="Record_latest" class="heatsupply.action.RecordAction" method="latest">
+	        <result type="json"></result>
+	    </action>
+	    <action name="Record_listMaxAndMin" class="heatsupply.action.RecordAction" method="listMaxAndMin">
+	        <result type="json"></result>
+	    </action>
+	    <action name="Alarm_fetch" class="heatsupply.action.AlarmAction" method="fetch">
+	        <result type="json"></result>
+	    </action>
+	    
 	</package>
 	
 	<package name="front" namespace="/" extends="struts-default">
@@ -65,12 +81,9 @@
 	     
 	    <action name="*_*" class="heatsupply.action.{1}Action" method="{2}">
 	        <result name="show_map">/Map_show.jsp</result>
-	        <!-- <result name="return_json" type="json">
-	            <param name="root">points</param>
-	            
-	            </result>
-	             -->
-	        <result name="equipment_list" type="chain">Equipment_list</result>
+	        <result name="Sensor_list" type="chain">Sensor_list</result>
+	        <result name="record_added">/Record_added.jsp</result>
+	        <result name="alarm_list">/Alarm_list.jsp</result>
 	        <result>/{1}_{2}.jsp</result>
 	        <result name="input">/{1}_{2}.jsp</result>
 	    </action>

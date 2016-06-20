@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         ===
     -->
     <meta charset="utf-8">
-    <title>地图（热图）显示-热网温度监测系统</title>
+    <title>报警历史-热网温度监测系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
@@ -55,17 +55,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <!-- The fav icon -->
     <link rel="shortcut icon" href="img/favicon.ico">
-    
-    <!-- 百度地图部分的CSS -->
-    <style type="text/css">
-        #map-container{height:550px;width:100%;}
-        #r-result{width:100%;}
-    </style>
-    <!-- 实时曲线部分的CSS -->
-    <style type="text/css">
-        .parallel{width:300;float:left;}
-        
-    </style>
 
 </head>
 
@@ -134,8 +123,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     class="glyphicon glyphicon-align-justify"></i><span> 传感器节点管理</span></a></li>
                         <li><a class="ajax-link" href="Alarm_list"><i class="glyphicon glyphicon-calendar"></i><span> 报警历史</span></a>
                         </li>
-						<li><a class="ajax-link" href="Alarm_list"><i class="glyphicon glyphicon-calendar"></i><span> 报警历史</span></a>
-                        </li>
 						<li class="accordion">
                             <a href="#"><i class="glyphicon glyphicon-plus"></i><span> 统计分析</span></a>
                             <ul class="nav nav-pills nav-stacked">
@@ -168,113 +155,82 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="content" class="col-lg-10 col-sm-10">
             <!-- content starts -->
                 
-                <div style ="color:red">
-    <s:fielderror />
-</div>
-    <div class="row">
-        <div class="box col-md-12">
-            <div class="box-inner">
-                <div class="box-header well" data-original-title="">
-                    <h2> 节点分布及温度图示</h2>
 
-                    <div class="box-icon">
-                    	<button class="btn btn-info btn-sm sensor-add-click-map">添加节点</button>
-                    	<button class="btn btn-info btn-sm show-or-hide-all-markers1">隐藏一级网节点标记</button>
-						<button class="btn btn-info btn-sm show-or-hide-all-markers2">隐藏二级网节点标记</button>
-                    	<button class="btn btn-info btn-sm show-or-hide-heatmap1">隐藏一级网热图</button>
-						<button class="btn btn-info btn-sm show-or-hide-heatmap2">隐藏二级网热图</button>
-                    </div>
-                </div>
-                <div class="box-content" id="map-container">
-                    <!-- 百度地图显示在此 -->
-				</div>
+    <div class="row">
+    <div class="box col-md-12">
+    <div class="box-inner">
+    <div class="box-header well" data-original-title="">
+        <h2><i class="glyphicon glyphicon-user"></i> 传感器节点信息</h2>
+
+        <div class="box-icon">
             </div>
-        </div>
-        <!--/span-->
+    </div>
+    <div class="box-content">
+    <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
+    <thead>
+    <tr>
+		<th>报警记录id</th>
+        <th>节点真实id</th>
+        <th>报警原因(1:高温, 2:低温)</th>
+        <th>故障是否已排除(0:false, 1:true)</th>
+		<th>报警时间</th>
+		<th>报警时温度</th>
+        <th>操作</th>
+    </tr>
+	</thead>
+	<tbody>
+	<s:iterator value="alarms" var="alarm">
+    <tr>
+        <td class="center"><s:property value="#alarm.id" /></td>
+        <td class="center"><s:property value="#alarm.sensor_id" /></td>
+		<td class="center"><s:property value="#alarm.reason" /></td>
+		<td class="center"><s:property value="#alarm.bug_cleared" /></td>
+		<td class="center"><s:property value="#alarm.time" /></td>
+		<td class="center"><s:property value="#alarm.t" /></td>
+        <td class="center">
+            <a class="btn btn-info" href="Alarm_bug_clear?id=<s:property value="#alarm.id"/>">
+                <i class="glyphicon glyphicon-edit icon-white"></i>
+                故障已排除
+            </a>
+        </td>
+    </tr>
+	</s:iterator>
+	</tbody>
+	</table>
+	
+    </div>
+    </div>
+    </div>
+    <!--/span-->
 
     </div><!--/row-->
+
 
     <!-- content ends -->
     </div><!--/#content.col-md-0-->
 </div><!--/fluid-row-->
 
     <hr>
-    <!-- 节点添加 dialog -->
-    <div class="modal fade" id="sensorAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
 
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h3>添加节点</h3>
+                    <h3>Settings</h3>
                 </div>
                 <div class="modal-body">
-                <form id="equip-add-form" action="Sensor_add" method="post">
-                    <table>
-                    <tr><td>节点真实id</td> <td><select id="select_building_id" name="sensor.building_id"/></td></tr>
-                    <tr><td>经度(longitude)</td> <td><input type="text" id="lng-input" name="sensor.longitude"></td></tr>
-					<tr><td>纬度(latitude)</td> <td><input type="text" id="lat-input" name="sensor.latitude"></td></tr>
-					<tr><td>管网层级</td> <td><select id="select_building_id" name="sensor.level">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							</td></tr>
-					
-					<tr><td>高温报警线</td> <td><input type="text" value="35.0" name="sensor.high_limit"> ℃</td></tr>
-					<tr><td>低温报警线</td> <td><input type="text" value="10.0" name="sensor.low_limit"> ℃</td></tr>
-					<tr><td>节点部署日期</td> <td><input type="text" id="date-input" name="sensor.date"></td></tr>
-					<tr><td>部署位置详情</td> <td><input type="text" name="sensor.position_detail"></td></tr>
-                    </table>
-                </form>
+                    <p>Here settings can be configured...</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
-                    <a id="equip-add-btn" class="btn btn-primary" data-dismiss="modal" value="" >确定添加</a>
+                    <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                    <a href="#" class="btn btn-primary" data-dismiss="modal">Save changes</a>
                 </div>
-                
             </div>
         </div>
     </div>
-	<!-- 节点添加 dialog结束 -->
-	<!-- 节点详情 dialog -->
-    <div class="modal fade" id="sensorDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h3>节点详情</h3>
-                </div>
-                <div class="modal-body">
-                    <table class="parallel">
-                    <tr><td>节点真实id</td> <td><a id="sensor-building_id"></a></td></tr>
-                    <tr><td>经度(longitude)</td> <td><a id="sensor-longitude"></a></td></tr>
-					<tr><td>纬度(latitude)</td> <td><a id="sensor-latitude"></a></td></tr>
-					<tr><td>管网层级</td> <td><a id="sensor-level"></a></td></tr>
-					
-					<tr><td>高温报警线</td> <td><a id="sensor-high_limit"></a> ℃</td></tr>
-					<tr><td>低温报警线</td> <td><a id="sensor-low_limit"></a> ℃</td></tr>
-					<tr><td>节点部署日期</td> <td><a id="sensor-date"></a></td></tr>
-					<tr><td>部署位置详情</td> <td><a id="sensor-position_detail"></a></td></tr>
-                    </table>
-               <!-- 实时曲线 -->
-		<div id="realtimechart" class="parallel" style="width:250;height:222px;"></div>
-		
-	    <!-- 实时曲线结束 -->
-                </div>
-                <div class="modal-footer">
-                    <a id="equip-update-btn" class="btn btn-info admin-see" data-dismiss="modal">修改</a>
-                    <a id="equip-delete-btn" target="_self"  class="btn btn-danger admin-see" data-dismiss="modal">删除</a>
-                    <a id="equip-history-btn" class="btn btn-success admin-see" data-dismiss="modal">历史温度查询</a>
-                </div>
-                
-            </div>
-        </div>
-        
-    </div>
-	<!-- 节点详情 dialog结束 -->
-	
     <footer class="row">
     </footer>
 
@@ -315,15 +271,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- application script for Charisma demo -->
 <script src="js/charisma.js"></script>
 
-<!-- 百度地图/热力图相关js -->
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=mKpWvXUdwYVOZDVD6mPo1dhKA9PGgrkq"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-<script type="text/javascript" src="js/map_operate.js"></script>
-
 <script type="text/javascript">
-$('#equip-add-btn').click(function(){
-	$('#equip-add-form').submit();
-});
 //定时向后台请求alarm数据
 var reasons = [];
 reasons.push("Not alarm");
@@ -363,9 +311,7 @@ function fetch_alarms(){
 }
 setInterval("fetch_alarms();",2000);
 </script>
-<!-- 实时曲线相关js -->
-<script src="bower_components/flot/excanvas.min.js"></script>
-		<script src="bower_components/flot/jquery.flot.js"></script>
-		<script src="js/init-chart.js"></script>
+
 </body>
 </html>
+

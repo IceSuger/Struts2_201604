@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         ===
     -->
     <meta charset="utf-8">
-    <title>地图（热图）显示-热网温度监测系统</title>
+    <title>历史温度查询-热网温度监测系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
@@ -66,6 +66,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         .parallel{width:300;float:left;}
         
     </style>
+	<!-- 日期选择插件的CSS -->
+	<style type="text/css">
+		.layinput{height: 22px;line-height: 22px;width: 150px;margin: 0;}
+	</style>
+
+	<!-- 日期选择插件 -->
+	<script type="text/javascript" src="js/laydate.js"></script>
 
 </head>
 
@@ -173,23 +180,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
     <div class="row">
         <div class="box col-md-12">
-            <div class="box-inner">
-                <div class="box-header well" data-original-title="">
-                    <h2> 节点分布及温度图示</h2>
+        <div class="box-inner">
+            <div class="box-header well">
+                <h2><i class="glyphicon glyphicon-list-alt"></i> 历史温度曲线</h2>
 
-                    <div class="box-icon">
-                    	<button class="btn btn-info btn-sm sensor-add-click-map">添加节点</button>
-                    	<button class="btn btn-info btn-sm show-or-hide-all-markers1">隐藏一级网节点标记</button>
-						<button class="btn btn-info btn-sm show-or-hide-all-markers2">隐藏二级网节点标记</button>
-                    	<button class="btn btn-info btn-sm show-or-hide-heatmap1">隐藏一级网热图</button>
-						<button class="btn btn-info btn-sm show-or-hide-heatmap2">隐藏二级网热图</button>
-                    </div>
+                <div class="box-icon">
+					<!-- <input class="laydate-icon" id="datepick" value="2016-06-05"> -->
+					<input readonly class="layinput" id="datepick">
+					<button class="btn btn-info btn-sm" id="btn-redraw">绘制曲线</button>
                 </div>
-                <div class="box-content" id="map-container">
-                    <!-- 百度地图显示在此 -->
-				</div>
+            </div>
+            <div class="box-content">
+                <div id="history" class="center" style="height:400px"></div>
+                <p id="hoverdata"><b>节点id：</b><span id="sensor-id"></span>, <b>节点位置：</b><span id="sensor-position"></span>, <b>管网层级：</b><span id="sensor-level"></span> <span
+                        id="clickdata"></span></p>
             </div>
         </div>
+		</div>
         <!--/span-->
 
     </div><!--/row-->
@@ -212,18 +219,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="modal-body">
                 <form id="equip-add-form" action="Sensor_add" method="post">
                     <table>
-                    <tr><td>节点真实id</td> <td><select id="select_building_id" name="sensor.building_id"/></td></tr>
-                    <tr><td>经度(longitude)</td> <td><input type="text" id="lng-input" name="sensor.longitude"></td></tr>
-					<tr><td>纬度(latitude)</td> <td><input type="text" id="lat-input" name="sensor.latitude"></td></tr>
-					<tr><td>管网层级</td> <td><select id="select_building_id" name="sensor.level">
+                    <tr><td>节点真实id</td> <td><select id="select_building_id" name="Sensor.building_id"/></td></tr>
+                    <tr><td>经度(longitude)</td> <td><input type="text" id="lng-input" name="Sensor.longitude"></td></tr>
+					<tr><td>纬度(latitude)</td> <td><input type="text" id="lat-input" name="Sensor.latitude"></td></tr>
+					<tr><td>管网层级</td> <td><select id="select_building_id" name="Sensor.level">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							</td></tr>
 					
-					<tr><td>高温报警线</td> <td><input type="text" value="35.0" name="sensor.high_limit"> ℃</td></tr>
-					<tr><td>低温报警线</td> <td><input type="text" value="10.0" name="sensor.low_limit"> ℃</td></tr>
-					<tr><td>节点部署日期</td> <td><input type="text" id="date-input" name="sensor.date"></td></tr>
-					<tr><td>部署位置详情</td> <td><input type="text" name="sensor.position_detail"></td></tr>
+					<tr><td>高温报警线</td> <td><input type="text" value="35.0" name="Sensor.high_limit"> ℃</td></tr>
+					<tr><td>低温报警线</td> <td><input type="text" value="10.0" name="Sensor.low_limit"> ℃</td></tr>
+					<tr><td>节点部署日期</td> <td><input type="text" id="date-input" name="Sensor.date"></td></tr>
+					<tr><td>部署位置详情</td> <td><input type="text" name="Sensor.position_detail"></td></tr>
                     </table>
                 </form>
                 </div>
@@ -315,11 +322,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- application script for Charisma demo -->
 <script src="js/charisma.js"></script>
 
-<!-- 百度地图/热力图相关js -->
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=mKpWvXUdwYVOZDVD6mPo1dhKA9PGgrkq"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
-<script type="text/javascript" src="js/map_operate.js"></script>
-
 <script type="text/javascript">
 $('#equip-add-btn').click(function(){
 	$('#equip-add-form').submit();
@@ -363,9 +365,15 @@ function fetch_alarms(){
 }
 setInterval("fetch_alarms();",2000);
 </script>
+<script type="text/javascript">
+!function(){
+	laydate({elem: '#datepick'});//绑定元素--日期选择
+}();
+</script>
+
 <!-- 实时曲线相关js -->
 <script src="bower_components/flot/excanvas.min.js"></script>
 		<script src="bower_components/flot/jquery.flot.js"></script>
-		<script src="js/init-chart.js"></script>
+		<script src="js/init-chart-history-temperature.js"></script>
 </body>
 </html>

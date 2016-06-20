@@ -1,207 +1,10 @@
-//chart with points
-if ($("#sincos").length) {
-    var sin = [], cos = [];
-
-    for (var i = 0; i < 14; i += 0.5) {
-        sin.push([i, Math.sin(i) / i]);
-        cos.push([i, Math.cos(i)]);
-    }
-
-    var plot = $.plot($("#sincos"),
-        [
-            { data: sin, label: "sin(x)/x"},
-            { data: cos, label: "cos(x)" }
-        ], {
-            series: {
-                lines: { show: true  },
-                points: { show: true }
-            },
-            grid: { hoverable: true, clickable: true, backgroundColor: { colors: ["#fff", "#eee"] } },
-            yaxis: { min: -1.2, max: 1.2 },
-            colors: ["#539F2E", "#3C67A5"]
-        });
-
-    function showTooltip(x, y, contents) {
-        $('<div id="tooltip">' + contents + '</div>').css({
-            position: 'absolute',
-            display: 'none',
-            top: y + 5,
-            left: x + 5,
-            border: '1px solid #fdd',
-            padding: '2px',
-            'background-color': '#dfeffc',
-            opacity: 0.80
-        }).appendTo("body").fadeIn(200);
-    }
-
-    var previousPoint = null;
-    $("#sincos").bind("plothover", function (event, pos, item) {
-        $("#x").text(pos.x.toFixed(2));
-        $("#y").text(pos.y.toFixed(2));
-
-        if (item) {
-            if (previousPoint != item.dataIndex) {
-                previousPoint = item.dataIndex;
-
-                $("#tooltip").remove();
-                var x = item.datapoint[0].toFixed(2),
-                    y = item.datapoint[1].toFixed(2);
-
-                showTooltip(item.pageX, item.pageY,
-                    item.series.label + " of " + x + " = " + y);
-            }
-        }
-        else {
-            $("#tooltip").remove();
-            previousPoint = null;
-        }
-    });
-
-
-    $("#sincos").bind("plotclick", function (event, pos, item) {
-        if (item) {
-            $("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
-            plot.highlight(item.series, item.datapoint);
-        }
-    });
-}
-
-//flot chart
-if ($("#flotchart").length) {
-    var d1 = [];
-    for (var i = 0; i < Math.PI * 2; i += 0.25)
-        d1.push([i, Math.sin(i)]);
-
-    var d2 = [];
-    for (var i = 0; i < Math.PI * 2; i += 0.25)
-        d2.push([i, Math.cos(i)]);
-
-    var d3 = [];
-    for (var i = 0; i < Math.PI * 2; i += 0.1)
-        d3.push([i, Math.tan(i)]);
-
-    $.plot($("#flotchart"), [
-        { label: "sin(x)", data: d1},
-        { label: "cos(x)", data: d2},
-        { label: "tan(x)", data: d3}
-    ], {
-        series: {
-            lines: { show: true },
-            points: { show: true }
-        },
-        xaxis: {
-            ticks: [0, [Math.PI / 2, "\u03c0/2"], [Math.PI, "\u03c0"], [Math.PI * 3 / 2, "3\u03c0/2"], [Math.PI * 2, "2\u03c0"]]
-        },
-        yaxis: {
-            ticks: 10,
-            min: -2,
-            max: 2
-        },
-        grid: {
-            backgroundColor: { colors: ["#fff", "#eee"] }
-        }
-    });
-}
-
-//stack chart
-if ($("#stackchart").length) {
-    var d1 = [];
-    for (var i = 0; i <= 10; i += 1)
-        d1.push([i, parseInt(Math.random() * 30)]);
-
-    var d2 = [];
-    for (var i = 0; i <= 10; i += 1)
-        d2.push([i, parseInt(Math.random() * 30)]);
-
-    var d3 = [];
-    for (var i = 0; i <= 10; i += 1)
-        d3.push([i, parseInt(Math.random() * 30)]);
-
-    var stack = 0, bars = true, lines = false, steps = false;
-
-    function plotWithOptions() {
-        $.plot($("#stackchart"), [ d1, d2, d3 ], {
-            series: {
-                stack: stack,
-                lines: { show: lines, fill: true, steps: steps },
-                bars: { show: bars, barWidth: 0.6 }
-            }
-        });
-    }
-
-    plotWithOptions();
-
-    $(".stackControls input").click(function (e) {
-        e.preventDefault();
-        stack = $(this).val() == "With stacking" ? true : null;
-        plotWithOptions();
-    });
-    $(".graphControls input").click(function (e) {
-        e.preventDefault();
-        bars = $(this).val().indexOf("Bars") != -1;
-        lines = $(this).val().indexOf("Lines") != -1;
-        steps = $(this).val().indexOf("steps") != -1;
-        plotWithOptions();
-    });
-}
-
-//pie chart
-var data = [
-    { label: "Internet Explorer", data: 12},
-    { label: "Mobile", data: 27},
-    { label: "Safari", data: 85},
-    { label: "Opera", data: 64},
-    { label: "Firefox", data: 90},
-    { label: "Chrome", data: 112}
-];
-
-if ($("#piechart").length) {
-    $.plot($("#piechart"), data,
-        {
-            series: {
-                pie: {
-                    show: true
-                }
-            },
-            grid: {
-                hoverable: true,
-                clickable: true
-            },
-            legend: {
-                show: false
-            }
-        });
-
-    function pieHover(event, pos, obj) {
-        if (!obj)
-            return;
-        percent = parseFloat(obj.series.percent).toFixed(2);
-        $("#hover").html('<span style="font-weight: bold; color: ' + obj.series.color + '">' + obj.series.label + ' (' + percent + '%)</span>');
-    }
-
-    $("#piechart").bind("plothover", pieHover);
-}
-
-//donut chart
-if ($("#donutchart").length) {
-    $.plot($("#donutchart"), data,
-        {
-            series: {
-                pie: {
-                    innerRadius: 0.5,
-                    show: true
-                }
-            },
-            legend: {
-                show: false
-            }
-        });
-}
+var sensor_id_for_drawing;
+var realtime_shown = false;
 
 
 // we use an inline data source in the example, usually data would
 // be fetched from a server
-var data = [], totalPoints = 300;
+var data_plot = [], totalPoints = 30;//300
 
 function getRandomData() {
     if (data.length > 0)
@@ -225,8 +28,51 @@ function getRandomData() {
     return res;
 }
 
+function initTempData(){
+	var res = [];
+    for (var i = 0; i < data_plot.length; ++i)
+        res.push([i, 20.0])
+	
+	return res;
+}
+function getTempData(){
+	if (data_plot.length > 0)
+        data_plot = data_plot.slice(1);
+	else
+	{
+		while (data_plot.length < totalPoints-1) {
+			y=20.0;
+			data_plot.push(y);
+		}
+	}
+	//放弃思路：last_record = 0;
+	////console.log(sensor_id_for_drawing);
+	//ajax请求该节点的最新温度record数据，并直接push该temperature到data
+	$.ajax({
+        url: "Record_latest?sensor_id="+sensor_id_for_drawing
+       , type: "GET"
+       , success: function( record, textStatus, jqXHR ){
+           // record 是返回的数据
+           // textStatus 可能为"success"、"notmodified"等
+           // jqXHR 是经过jQuery封装的XMLHttpRequest对象
+		   //console.log(record.record.temperature);
+		   ////console.log(record.temperature);
+		   data_plot.push(record.record.temperature);
+       }
+    });
+	
+	//放弃思路：记下该record的id。与last_record比较，相同，则push
+	
+	var res = [];
+    for (var i = 0; i < data_plot.length; ++i)
+        res.push([i, data_plot[i]])
+	
+	//console.log(data_plot);
+    return res;
+}
+
 // setup control widget
-var updateInterval = 30;
+var updateInterval = 600;//原来是30
 $("#updateInterval").val(updateInterval).change(function () {
     var v = $(this).val();
     if (v && !isNaN(+v)) {
@@ -239,19 +85,26 @@ $("#updateInterval").val(updateInterval).change(function () {
     }
 });
 
+
 //realtime chart
-if ($("#realtimechart").length) {
+if ($("#realtimechart").length ) {
     var options = {
         series: { shadowSize: 1 }, // drawing is faster without shadows
-        yaxis: { min: 0, max: 100 },
-        xaxis: { show: false }
+        yaxis: { min: 10, max: 45 },
+        xaxis: { min: 0, max:30, show: true }
     };
-    var plot = $.plot($("#realtimechart"), [ getRandomData() ], options);
-
+    var plot = $.plot($("#realtimechart"), [ initTempData() ], options);
+	//var plot;
+	
     function update() {
-        plot.setData([ getRandomData() ]);
-        // since the axes don't change, we don't need to call plot.setupGrid()
-        plot.draw();
+		//console.log(realtime_shown);
+		if(realtime_shown)
+		{
+			//plot = $.plot($("#realtimechart"), [ getTempData() ], options);
+			
+			plot.setData([ getTempData() ]);
+			plot.draw();
+		}
 
         setTimeout(update, updateInterval);
     }

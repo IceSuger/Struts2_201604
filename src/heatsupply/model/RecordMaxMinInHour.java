@@ -3,10 +3,30 @@ package heatsupply.model;
 //import java.sql.Date;
 import java.util.Date;
 
-public class Record {
+public class RecordMaxMinInHour {
 	private int id;
 	private String sensor_id;
-	private float temperature;
+	private float min;
+	private float max;
+	private int hour;
+	public float getMin() {
+		return min;
+	}
+	public void setMin(float min) {
+		this.min = min;
+	}
+	public float getMax() {
+		return max;
+	}
+	public void setMax(float max) {
+		this.max = max;
+	}
+	public int getHour() {
+		return hour;
+	}
+	public void setHour(int hour) {
+		this.hour = hour;
+	}
 	private Date time;
 	
 	public int getId() {
@@ -21,12 +41,7 @@ public class Record {
 	public void setSensor_id(String sensor_id) {
 		this.sensor_id = sensor_id;
 	}
-	public float getTemperature() {
-		return temperature;
-	}
-	public void setTemperature(float temperature) {
-		this.temperature = temperature;
-	}
+
 	public Date getTime() {
 		return time;
 	}
