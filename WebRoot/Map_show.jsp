@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         ===
     -->
     <meta charset="utf-8">
-    <title>地图（热图）显示-热网温度监测系统</title>
+    <title>老师在哪</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
     <meta name="author" content="Muhammad Usman">
@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <div class="navbar-inner">
             <a class="navbar-brand" href="Map_show"> <img alt="Charisma Logo" src="img/logo20.png" class="hidden-xs"/>
-                热网温度监测系统</a>
+                老师在哪</a>
 
             <!-- user dropdown starts -->
             <div class="btn-group pull-right">
@@ -175,7 +175,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="box col-md-12">
             <div class="box-inner">
                 <div class="box-header well" data-original-title="">
-                    <h2> 节点分布及温度图示</h2>
+                    <h2> 老师分布</h2>
 
                     <div class="box-icon">
                     	<button class="btn btn-info btn-sm search-teachers">搜索老师</button>

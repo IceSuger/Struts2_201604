@@ -86,9 +86,10 @@
     });*/
 	//点击地图，获取点击处的经纬度，读取搜索框里的条件，以点击处作为搜索范围中心搜索老师们
 	function searchTeachers(e){
-		console.log(e.point.lng);
+		//先把原有的markers干掉
+		map.clearOverlays();
+		
 		map.removeEventListener("click", searchTeachers);
-		console.log("teacherType:" + teacherType);
 		showTeachers($('#teacherType').val(), e.point.lng, e.point.lat, $('#dist').val());
 		/*$('#lng-input').val(e.point.lng);
 		$('#lat-input').val(e.point.lat);
@@ -96,6 +97,8 @@
 		$('#sensorAdd').modal('show');
 		listUnusedIds();*/
 	}
+	
+	
    
    
     // // heatmapOverlay.setDataSet({data:points,max:100});
@@ -166,6 +169,37 @@
 		   // }
 	   // });
 	// }
+	function findAndShowTeacherWindow(uniqueId, point){
+		//通过ajax向后台请求id代表的老师的简单信息
+		$.ajax({
+        url: "Teacher_find?uniqueId="+uniqueId
+       , type: "GET"
+       , success: function( data0, textStatus, jqXHR ){
+           // data0 是返回的数据
+           // textStatus 可能为"success"、"notmodified"等
+           // jqXHR 是经过jQuery封装的XMLHttpRequest对象
+		   var data = data0.teacher;
+           console.log(data0);
+		   console.log(data);
+		   avatarUrl = data.avatarUrl;
+		   teacherName = data.name;
+		   intro = data.intro;
+		   score = data.score;
+		   /**
+			*	点击marker，显示老师简单信息
+			*/
+			//添加带头像的老师信息窗口
+			var sContent =
+				"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>"+ teacherName + "</h4>" + 
+				"<img style='float:right;margin:4px' id='imgDemo' src=" + avatarUrl + " width='64' height='64'/>" + 
+				"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>" + intro + "</p>" + 
+				"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>评价：" + score + " 分</p>" + 
+				"</div>";
+			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+			map.openInfoWindow(infoWindow,point); //开启信息窗口
+		   }
+	   });
+	}
  	// // 编写自定义函数,放置节点，并创建标注
 	// function addMarker1(point){
  		// ////console.log(point.id+" lng:"+point.lng+" lat:"+point.lat);
@@ -232,21 +266,11 @@
 		//marker.setLabel(label);
 		//marker.count = point.count;
 		//console.log(marker);
-		/*marker.addEventListener('click',function(){
-			//alert(point.id);
-			findSensor(point.building_id);
-			data_plot = [];
-			sensor_id_for_drawing = point.building_id;
-			//console.log(sensor_id_for_drawing);
-			$('#sensorDetail').modal('show');
-			realtime_shown = true;
-			$('#equip-delete-btn').attr('href','Sensor_delete?building_id='+point.building_id);
-			$('#equip-update-btn').attr('href','Sensor_update?building_id='+point.building_id);
-			//$('#equip-history-btn').attr('href','Record_history?sensor_id='+point.building_id+'&date="2016-06-05"');
-			$('#equip-history-btn').click(function(){
-				//location.href = 'Record_history?sensor_id='+point.building_id+'&date=2016-06-05';
-			}); 
-		});*/
+		marker.addEventListener('click',function(){
+			/**
+			*/
+			findAndShowTeacherWindow(point.uniqueId, marker.point);
+		});
 		map.addOverlay(marker);
 		markers_teacher.push(marker);
 	}		

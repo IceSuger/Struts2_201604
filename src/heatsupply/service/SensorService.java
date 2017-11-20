@@ -76,24 +76,51 @@ public class SensorService {
 		return Sensors;
 	}
 	
+//	public Teacher find(String uniqueId){
+//		Connection conn = DB.createConn();
+//		String sql = "select * from _teachers_bj where uniqueId= ?";
+//		PreparedStatement ps = DB.prepare(conn, sql);
+//		Teacher eq = new Teacher();
+//		try {
+//			ps.setString(1, uniqueId);
+//			ResultSet rs =  ps.executeQuery();
+//			while(rs.next()){
+//				//eq.setId(rs.getInt("id"));
+//				eq.setBuilding_id(rs.getString("building_id"));
+//				eq.setLatitude(rs.getString("latitude"));
+//				eq.setLongitude(rs.getString("longitude"));
+//				eq.setHigh_limit(rs.getFloat("high_limit"));
+//				eq.setLow_limit(rs.getFloat("low_limit"));
+//				eq.setDate(rs.getDate("date"));
+//				eq.setPosition_detail(rs.getString("position_detail"));
+//				eq.setLevel(rs.getInt("level"));
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		DB.close(ps);
+//		DB.close(conn);
+//		return eq;
+//	}
+	
 	public Teacher find(String uniqueId){
 		Connection conn = DB.createConn();
 		String sql = "select * from _teachers_bj where uniqueId= ?";
 		PreparedStatement ps = DB.prepare(conn, sql);
-		Teacher eq = new Teacher();
+		Teacher tc = new Teacher();
 		try {
 			ps.setString(1, uniqueId);
 			ResultSet rs =  ps.executeQuery();
 			while(rs.next()){
 				//eq.setId(rs.getInt("id"));
-				eq.setBuilding_id(rs.getString("building_id"));
-				eq.setLatitude(rs.getString("latitude"));
-				eq.setLongitude(rs.getString("longitude"));
-				eq.setHigh_limit(rs.getFloat("high_limit"));
-				eq.setLow_limit(rs.getFloat("low_limit"));
-				eq.setDate(rs.getDate("date"));
-				eq.setPosition_detail(rs.getString("position_detail"));
-				eq.setLevel(rs.getInt("level"));
+				tc.setName(rs.getString("name"));
+				tc.setScore(rs.getString("score"));
+				tc.setUniqueId(rs.getString("uniqueId"));
+				String tmp = rs.getString("avatarUrl");
+				
+				tc.setAvatarUrl(tmp.substring(2, tmp.length()-2));
+				tc.setIntro(rs.getString("intro"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -101,7 +128,7 @@ public class SensorService {
 		}
 		DB.close(ps);
 		DB.close(conn);
-		return eq;
+		return tc;
 	}
 	
 	public void delete(Teacher eq){

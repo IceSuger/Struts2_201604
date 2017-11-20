@@ -10,7 +10,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class SensorAction extends ActionSupport {
 	private List<Teacher> Sensors;
 	private SensorService SensorService = new SensorService();
-	private Teacher Sensor;
+	private Teacher teacher;
 	
 	private List<Object> points;
 	private List<String> unusedIds;
@@ -37,6 +37,43 @@ public class SensorAction extends ActionSupport {
 	private double centerX;
 	private double centerY;
 	private double dist;
+	
+	private String uniqueId;
+	private String intro;
+	private String avatarUrl;
+	private String score;
+
+	public String getUniqueId() {
+		return uniqueId;
+	}
+
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
+	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
+	}
+
+	public String getScore() {
+		return score;
+	}
+
+	public void setScore(String score) {
+		this.score = score;
+	}
 
 	public int getLevel() {
 		return level;
@@ -70,12 +107,12 @@ public class SensorAction extends ActionSupport {
 		this.SensorService = SensorService;
 	}
 
-	public Teacher getSensor() {
-		return Sensor;
+	public Teacher getTeacher() {
+		return teacher;
 	}
 
-	public void setSensor(Teacher Sensor) {
-		this.Sensor = Sensor;
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 
 	public String getBuilding_id() {
@@ -91,13 +128,18 @@ public class SensorAction extends ActionSupport {
 	 */
 	
 	public String add(){
-		SensorService.add(Sensor);
+		SensorService.add(teacher);
 		System.out.println("show_map");
 		return "show_map";
 	}
 	
+//	public String find(){
+//		Sensor = SensorService.find(building_id);
+//		return SUCCESS;
+//	}
+	
 	public String find(){
-		Sensor = SensorService.find(building_id);
+		teacher = SensorService.find(uniqueId);
 		return SUCCESS;
 	}
 	
@@ -107,7 +149,7 @@ public class SensorAction extends ActionSupport {
 	}
 	
 	public String update(){
-		SensorService.update(Sensor);
+		SensorService.update(teacher);
 		return SUCCESS;
 	}
 	

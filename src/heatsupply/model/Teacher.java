@@ -11,6 +11,9 @@ public class Teacher{
 	private double x;
 	private double y;
 	private String teacherType;
+	private String avatarUrl;
+	private String intro;
+	
 	public String getUniqueId() {
 		return uniqueId;
 	}
@@ -46,6 +49,18 @@ public class Teacher{
 	}
 	public void setTeacherType(String teacherType) {
 		this.teacherType = teacherType;
+	}
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
+	}
+	public String getIntro() {
+		return intro;
+	}
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 	
 	
