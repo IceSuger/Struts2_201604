@@ -16,14 +16,14 @@ import org.apache.struts2.components.Set;
 
 import com.google.gson.Gson;
 
-import heatsupply.model.Sensor;
+import heatsupply.model.Teacher;
 import heatsupply.model.Record;
 import heatsupply.util.DB;
 
 public class EquipmentService {
 	private RecordService recordService = new RecordService();
 	
-	public void add(Sensor eq){
+	public void add(Teacher eq){
 		Connection conn = DB.createConn();
 		String sql = "insert into _Sensors values ( ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = DB.prepare(conn, sql);
@@ -46,17 +46,17 @@ public class EquipmentService {
 		DB.close(conn);
 	}
 	
-	public List<Sensor> list(){
+	public List<Teacher> list(){
 		Connection conn = DB.createConn();
 		String sql = "select * from _Sensors";
 		PreparedStatement ps = DB.prepare(conn, sql);
-		List<Sensor> Sensors = new ArrayList<Sensor>();
+		List<Teacher> Sensors = new ArrayList<Teacher>();
 		try {
 			ResultSet rs =  ps.executeQuery();
-			Sensor eq = null;
+			Teacher eq = null;
 			while(rs.next()){
 				//System.out.println(rs.getInt("id")+"\t"+rs.getInt("Sensor_id"));
-				eq = new Sensor();
+				eq = new Teacher();
 				//eq.setId(rs.getInt("id"));
 				eq.setBuilding_id(rs.getString("building_id"));
 				eq.setLatitude(rs.getString("latitude"));
@@ -77,11 +77,11 @@ public class EquipmentService {
 		return Sensors;
 	}
 	
-	public Sensor find(String building_id){
+	public Teacher find(String building_id){
 		Connection conn = DB.createConn();
 		String sql = "select * from _Sensors where building_id= ?";
 		PreparedStatement ps = DB.prepare(conn, sql);
-		Sensor eq = new Sensor();
+		Teacher eq = new Teacher();
 		try {
 			ps.setString(1, building_id);
 			ResultSet rs =  ps.executeQuery();
@@ -105,7 +105,7 @@ public class EquipmentService {
 		return eq;
 	}
 	
-	public void delete(Sensor eq){
+	public void delete(Teacher eq){
 		deleteById(eq.getBuilding_id());
 	}
 	
@@ -124,7 +124,7 @@ public class EquipmentService {
 		DB.close(conn);
 	}
 	
-	public void update(Sensor s){
+	public void update(Teacher s){
 		/*Connection conn = DB.createConn();
 		String sql = "update _Sensors set Sensor_id = ? where id = ?";
 		PreparedStatement ps = DB.prepare(conn, sql);
@@ -144,14 +144,14 @@ public class EquipmentService {
 		Connection conn = DB.createConn();
 		String sql = "select * from _Sensors where level=?";
 		PreparedStatement ps = DB.prepare(conn, sql);
-		List<Sensor> Sensors = new ArrayList<Sensor>();
+		List<Teacher> Sensors = new ArrayList<Teacher>();
 		List<Object> points = new ArrayList<Object>();
 		Gson gson = new Gson();
 		
 		try {
 			ps.setInt(1, level);
 			ResultSet rs =  ps.executeQuery();
-			Sensor eq = null;
+			Teacher eq = null;
 			while(rs.next()){
 				Map<String,String> map = new HashMap<String,String>();
 				//map.put("id", String.valueOf(rs.getInt("id")));

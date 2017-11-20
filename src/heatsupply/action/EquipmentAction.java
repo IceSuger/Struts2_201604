@@ -1,6 +1,6 @@
 package heatsupply.action;
 
-import heatsupply.model.Sensor;
+import heatsupply.model.Teacher;
 import heatsupply.service.SensorService;
 
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class SensorAction extends ActionSupport {
-	private List<Sensor> Sensors;
+public class EquipmentAction extends ActionSupport {
+	private List<Teacher> Sensors;
 	private SensorService SensorService = new SensorService();
-	private Sensor Sensor;
+	private Teacher Sensor;
 	
 	private List<Object> points;
 	private List<String> unusedIds;
@@ -39,11 +39,11 @@ public class SensorAction extends ActionSupport {
 		this.unusedIds = unusedIds;
 	}
 
-	public List<Sensor> getSensors() {
+	public List<Teacher> getSensors() {
 		return Sensors;
 	}
 
-	public void setSensors(List<Sensor> Sensors) {
+	public void setSensors(List<Teacher> Sensors) {
 		this.Sensors = Sensors;
 	}
 
@@ -55,11 +55,11 @@ public class SensorAction extends ActionSupport {
 		this.SensorService = SensorService;
 	}
 
-	public Sensor getSensor() {
+	public Teacher getSensor() {
 		return Sensor;
 	}
 
-	public void setSensor(Sensor Sensor) {
+	public void setSensor(Teacher Sensor) {
 		this.Sensor = Sensor;
 	}
 

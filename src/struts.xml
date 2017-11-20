@@ -52,7 +52,10 @@
     </package>
     
 	<package name="json" namespace="/" extends="json-default">
-	     <action name="Sensor_listPoints" class="heatsupply.action.SensorAction" method="listPoints">
+		<action name="Teacher_listPoints" class="heatsupply.action.SensorAction" method="listPoints">
+	        <result type="json"></result>
+	    </action>
+	    <action name="Sensor_listPoints" class="heatsupply.action.SensorAction" method="listPoints">
 	        <result type="json"></result>
 	    </action>
 	    <action name="Sensor_find" class="heatsupply.action.SensorAction" method="find">

@@ -2,22 +2,22 @@ package heatsupply.action;
 
 import java.util.List;
 
-import heatsupply.model.Sensor;
+import heatsupply.model.Teacher;
 import heatsupply.service.SensorService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 public class MapAction extends ActionSupport {
-	private List<Sensor> sensors;
+	private List<Teacher> sensors;
 	private SensorService sensorService = new SensorService();
-	private Sensor sensor;
+	private Teacher sensor;
 	private int id;
 	
-	public List<Sensor> getSensors() {
+	public List<Teacher> getSensors() {
 		return sensors;
 	}
 
-	public void setSensors(List<Sensor> sensors) {
+	public void setSensors(List<Teacher> sensors) {
 		this.sensors = sensors;
 	}
 
@@ -29,11 +29,11 @@ public class MapAction extends ActionSupport {
 		this.sensorService = sensorService;
 	}
 
-	public Sensor getSensor() {
+	public Teacher getSensor() {
 		return sensor;
 	}
 
-	public void setSensor(Sensor sensor) {
+	public void setSensor(Teacher sensor) {
 		this.sensor = sensor;
 	}
 

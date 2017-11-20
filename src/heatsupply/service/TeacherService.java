@@ -20,8 +20,8 @@ import heatsupply.model.Teacher;
 import heatsupply.model.Record;
 import heatsupply.util.DB;
 
-public class SensorService {
-	private RecordService recordService = new RecordService();
+public class TeacherService {
+	//private RecordService recordService = new RecordService();
 	
 	public void add(Teacher eq){
 		Connection conn = DB.createConn();
@@ -80,20 +80,18 @@ public class SensorService {
 		Connection conn = DB.createConn();
 		String sql = "select * from _teachers_bj where uniqueId= ?";
 		PreparedStatement ps = DB.prepare(conn, sql);
-		Teacher eq = new Teacher();
+		Teacher tc = new Teacher();
 		try {
 			ps.setString(1, uniqueId);
 			ResultSet rs =  ps.executeQuery();
 			while(rs.next()){
 				//eq.setId(rs.getInt("id"));
-				eq.setBuilding_id(rs.getString("building_id"));
-				eq.setLatitude(rs.getString("latitude"));
-				eq.setLongitude(rs.getString("longitude"));
-				eq.setHigh_limit(rs.getFloat("high_limit"));
-				eq.setLow_limit(rs.getFloat("low_limit"));
-				eq.setDate(rs.getDate("date"));
-				eq.setPosition_detail(rs.getString("position_detail"));
-				eq.setLevel(rs.getInt("level"));
+				tc.setName(rs.getString("name"));
+				tc.setScore(rs.getString("score"));
+				tc.setTeacherType(rs.getString("teacherType"));
+				tc.setUniqueId(rs.getString("uniqueId"));
+				tc.setX(rs.getDouble("x"));
+				tc.setY(rs.getDouble("y"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -101,11 +99,7 @@ public class SensorService {
 		}
 		DB.close(ps);
 		DB.close(conn);
-		return eq;
-	}
-	
-	public void delete(Teacher eq){
-		deleteById(eq.getBuilding_id());
+		return tc;
 	}
 	
 	public void deleteById(String building_id){
@@ -139,7 +133,7 @@ public class SensorService {
 		DB.close(conn);*/
 	}
 	
-	/*public List<Object> listPoints(int level){
+	public List<Object> listPoints(int level){
 		Connection conn = DB.createConn();
 		String sql = "select * from _teachers_bj where level=?";
 		PreparedStatement ps = DB.prepare(conn, sql);
@@ -171,58 +165,6 @@ public class SensorService {
 		DB.close(conn);
 		//System.out.println(gson.toJson(points).toString());
 		//return gson.toJson(points).toString();
-		return points;
-	}*/
-	
-	/**
-	 * 输入老师类别、当前查询的位置中心、区域范围大小（距中心的公里数），返回一定区域内的老师们对应的地图point。
-	 * @return List<Map<String,Object>>
-	 */
-	public List<Object> listPoints(String teacherType, double centerX, double centerY, double dist)
-	{
-		Connection conn = DB.createConn();
-		String sql = "select * from _teachers_bj WHERE\n" +
-						"sqrt(\n" +
-						"		(\n" +
-						"			(\n" +
-						"				(" + centerX + " - x) * PI() * 12656 * cos(((" + centerY + " + y) / 2) * PI() / 180) / 180\n" +
-						"			) * (\n" +
-						"				(" + centerX + " - x) * PI() * 12656 * cos(((" + centerY + " + y) / 2) * PI() / 180) / 180\n" +
-						"			)\n" +
-						"		) + (\n" +
-						"			(\n" +
-						"				(" + centerY + " - y) * PI() * 12656 / 180\n" +
-						"			) * (\n" +
-						"				(" + centerY + " - y) * PI() * 12656 / 180\n" +
-						"			)\n" +
-						"		)\n" +
-						"	) < " + dist + " AND\n" +
-						"_teachers_bj.teacherType LIKE '%" + teacherType + "%'";
-		System.out.println(sql);
-		PreparedStatement ps = DB.prepare(conn, sql);
-		List<Teacher> teachers = new ArrayList<Teacher>();
-		List<Object> points = new ArrayList<Object>();
-		
-		try {
-			ResultSet rs =  ps.executeQuery();
-			Teacher tc = null;
-			while(rs.next()){
-				Map<String,Object> map = new HashMap<String,Object>();
-				//map.put("id", String.valueOf(rs.getInt("id")));
-				map.put("uniqueId", rs.getString("uniqueId"));
-				map.put("x", rs.getDouble("x"));
-				map.put("y", rs.getDouble("y"));
-				map.put("name", rs.getString("name"));
-				map.put("score", rs.getString("score"));
-				
-				points.add(map);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DB.close(ps);
-		DB.close(conn);
 		return points;
 	}
 	

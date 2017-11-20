@@ -3,7 +3,7 @@ package heatsupply.model;
 //import java.sql.Date;
 import java.util.Date;
 
-public class Sensor {
+public class Equipment {
 	//private int id;
 	private String building_id;
 	private String latitude;

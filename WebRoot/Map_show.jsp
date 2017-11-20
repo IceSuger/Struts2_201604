@@ -178,11 +178,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <h2> 节点分布及温度图示</h2>
 
                     <div class="box-icon">
-                    	<button class="btn btn-info btn-sm sensor-add-click-map">添加节点</button>
-                    	<button class="btn btn-info btn-sm show-or-hide-all-markers1">隐藏一级网节点标记</button>
+                    	<button class="btn btn-info btn-sm search-teachers">搜索老师</button>
+                    	<!-- 
+						<button class="btn btn-info btn-sm show-or-hide-all-markers1">隐藏一级网节点标记</button>
 						<button class="btn btn-info btn-sm show-or-hide-all-markers2">隐藏二级网节点标记</button>
                     	<button class="btn btn-info btn-sm show-or-hide-heatmap1">隐藏一级网热图</button>
 						<button class="btn btn-info btn-sm show-or-hide-heatmap2">隐藏二级网热图</button>
+						 -->
+						<input id="teacherType" type="text" value="">
+						<input id="dist" type="text" value="3">
                     </div>
                 </div>
                 <div class="box-content" id="map-container">
@@ -361,7 +365,7 @@ function fetch_alarms(){
 		   }
 	});
 }
-setInterval("fetch_alarms();",2000);
+//setInterval("fetch_alarms();",2000);
 </script>
 <!-- 实时曲线相关js -->
 <script src="bower_components/flot/excanvas.min.js"></script>

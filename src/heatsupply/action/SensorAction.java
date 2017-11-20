@@ -1,6 +1,6 @@
 package heatsupply.action;
 
-import heatsupply.model.Sensor;
+import heatsupply.model.Teacher;
 import heatsupply.service.SensorService;
 
 import java.util.List;
@@ -8,15 +8,35 @@ import java.util.List;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class SensorAction extends ActionSupport {
-	private List<Sensor> Sensors;
+	private List<Teacher> Sensors;
 	private SensorService SensorService = new SensorService();
-	private Sensor Sensor;
+	private Teacher Sensor;
 	
 	private List<Object> points;
 	private List<String> unusedIds;
 	private String building_id;
 	private int level;
 	
+	public String getTeacherType() {
+		return teacherType;
+	}
+
+	public void setTeacherType(String teacherType) {
+		this.teacherType = teacherType;
+	}
+
+	public double getDist() {
+		return dist;
+	}
+
+	public void setDist(double dist) {
+		this.dist = dist;
+	}
+
+	private String teacherType;
+	private double centerX;
+	private double centerY;
+	private double dist;
 
 	public int getLevel() {
 		return level;
@@ -34,11 +54,11 @@ public class SensorAction extends ActionSupport {
 		this.unusedIds = unusedIds;
 	}
 
-	public List<Sensor> getSensors() {
+	public List<Teacher> getSensors() {
 		return Sensors;
 	}
 
-	public void setSensors(List<Sensor> Sensors) {
+	public void setSensors(List<Teacher> Sensors) {
 		this.Sensors = Sensors;
 	}
 
@@ -50,11 +70,11 @@ public class SensorAction extends ActionSupport {
 		this.SensorService = SensorService;
 	}
 
-	public Sensor getSensor() {
+	public Teacher getSensor() {
 		return Sensor;
 	}
 
-	public void setSensor(Sensor Sensor) {
+	public void setSensor(Teacher Sensor) {
 		this.Sensor = Sensor;
 	}
 
@@ -66,6 +86,10 @@ public class SensorAction extends ActionSupport {
 		this.building_id = building_id;
 	}
 
+	/*
+	 * END OF GETTER & SETTER
+	 */
+	
 	public String add(){
 		SensorService.add(Sensor);
 		System.out.println("show_map");
@@ -103,10 +127,26 @@ public class SensorAction extends ActionSupport {
 	}
 
 	public String listPoints(){
-		points = SensorService.listPoints(level);
+		points = SensorService.listPoints(teacherType, centerX, centerY, dist);
 		return SUCCESS;
 		//return "return_json";
 	}
+	public double getCenterX() {
+		return centerX;
+	}
+
+	public void setCenterX(double centerX) {
+		this.centerX = centerX;
+	}
+
+	public double getCenterY() {
+		return centerY;
+	}
+
+	public void setCenterY(double centerY) {
+		this.centerY = centerY;
+	}
+
 	public String addInput(){
 		System.out.println("addInput");
 		//SensorService.add(Sensor);
