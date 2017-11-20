@@ -1,6 +1,19 @@
 	var map = new BMap.Map("map-container");          // 创建地图实例
     //var point = new BMap.Point(126.637968,45.751664);//哈工大图书馆门口的经纬度
 	var point = new BMap.Point("116.334417","39.983799");//知春里附近的某个经纬度
+	var geolocation = new BMap.Geolocation();
+	geolocation.getCurrentPosition(function(r){
+		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+			// var mk = new BMap.Marker(r.point);
+			// map.addOverlay(mk);
+			map.panTo(r.point);
+			//alert('您的位置：'+r.point.lng+','+r.point.lat);
+		}
+		else {
+			//alert('failed'+this.getStatus());
+		}        
+	},{enableHighAccuracy: true})
+
 	map.centerAndZoom(point, 16);             // 初始化地图，设置中心点坐标和地图级别
     var markers1 = [];//保存全部的markers的引用，用于同时隐藏/显示它们
 	var markers2 = [];//保存全部的markers的引用，用于同时隐藏/显示它们
