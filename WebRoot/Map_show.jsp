@@ -48,6 +48,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- jQuery -->
     <script src="bower_components/jquery/jquery.min.js"></script>
 
+	<!-- 城市选择相关js -->
+	<script type="text/javascript" src="js/jquery.citys.js"></script>
     <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -176,8 +178,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="box-inner">
                 <div class="box-header well" data-original-title="">
                     <h2> 老师分布</h2>
-
-                    <div class="box-icon">
+                    
+                    <div class="box-icon citys" id="demo2">
+                    	<!-- 地点手动输入
+                    	<input id="locationInput" class="places" type="text" name="placeinputbox" value=""> -->
+                    	<!-- 城市选择（id demo2是用于城市选择代码的） -->
+                    	
+	                    	<select name="province"></select>
+			                <select name="city"></select>
+			                <select name="area"></select>
                     	<button class="btn btn-info btn-sm search-teachers">搜索老师</button>
                     	<!-- 
 						<button class="btn btn-info btn-sm show-or-hide-all-markers1">隐藏一级网节点标记</button>
@@ -371,5 +380,25 @@ function fetch_alarms(){
 <script src="bower_components/flot/excanvas.min.js"></script>
 		<script src="bower_components/flot/jquery.flot.js"></script>
 		<script src="js/init-chart.js"></script>
+<!-- 城市选择相关js -->
+<script type="text/javascript">
+                $('#demo2').citys({
+                    required:false,
+                    nodata:'disabled',
+                    onChange:function(data){
+                        //var text = data['direct']?'(直辖市)':'';
+                        //$('#place').text('当前选中地区：'+data['province']+text+' '+data['city']+' '+data['area']);
+                        var placeText = data['province']+' '+data['city']+' '+data['area'];
+                        map.centerAndZoom(placeText, 16); 
+                    }
+                });
+                //$('#locationInput').places({
+                //	required:false,
+                //    nodata:'disabled',
+                //	onChange:function(data){
+               // 		map.centerAndZoom(data, 16);
+                //	}
+                //});
+            </script>
 </body>
 </html>
