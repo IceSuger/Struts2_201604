@@ -1,7 +1,6 @@
 package heatsupply.action;
 
 import heatsupply.model.Record;
-import heatsupply.model.RecordMaxMinInHour;
 import heatsupply.service.RecordService;
 
 import java.util.Date;
@@ -26,7 +25,7 @@ public class RecordAction extends ActionSupport {
 	private RecordService recordService = new RecordService();
 	private String sensor_id;
 	private String date;
-	private List<RecordMaxMinInHour> recordsMaxMin;
+	//private List<RecordMaxMinInHour> recordsMaxMin;
 	
 
 	public int getId() {
@@ -76,17 +75,17 @@ public class RecordAction extends ActionSupport {
 		record = recordService.latest(sensor_id);
 		return SUCCESS;
 	}
-	
-	public String listMaxAndMin(){
-		recordsMaxMin = recordService.listMaxAndMin(sensor_id, date);
-		return SUCCESS;
-	}
-	
-	public String history(){
-		recordsMaxMin = recordService.listMaxAndMin(sensor_id, date);
-		return SUCCESS;
-	}
-	
+//	
+//	public String listMaxAndMin(){
+//		recordsMaxMin = recordService.listMaxAndMin(sensor_id, date);
+//		return SUCCESS;
+//	}
+//	
+//	public String history(){
+//		recordsMaxMin = recordService.listMaxAndMin(sensor_id, date);
+//		return SUCCESS;
+//	}
+//	
 
 	public String getDate() {
 		return date;
@@ -95,14 +94,14 @@ public class RecordAction extends ActionSupport {
 	public void setDate(String date) {
 		this.date = date;
 	}
-
-	public List<RecordMaxMinInHour> getRecordsMaxMin() {
-		return recordsMaxMin;
-	}
-
-	public void setRecordsMaxMin(List<RecordMaxMinInHour> recordsMaxMin) {
-		this.recordsMaxMin = recordsMaxMin;
-	}
+//
+//	public List<RecordMaxMinInHour> getRecordsMaxMin() {
+//		return recordsMaxMin;
+//	}
+//
+//	public void setRecordsMaxMin(List<RecordMaxMinInHour> recordsMaxMin) {
+//		this.recordsMaxMin = recordsMaxMin;
+//	}
 
 	public String getSensor_id() {
 		return sensor_id;

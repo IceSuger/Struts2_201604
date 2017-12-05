@@ -286,7 +286,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         
     </div>
-	<!-- 节点详情 dialog结束 -->
+	<!-- 节点详情 dialog结束 --> 
 	
     <footer class="row">
     </footer>

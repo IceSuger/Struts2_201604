@@ -12,7 +12,6 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import heatsupply.model.Record;
-import heatsupply.model.RecordMaxMinInHour;
 import heatsupply.util.DB;
 
 public class RecordService {
@@ -156,36 +155,36 @@ public class RecordService {
 		DB.close(conn);
 		return Records;
 	}
-	
-	public List<RecordMaxMinInHour> listMaxAndMin(String sensor_id, String date){
-		Connection conn = DB.createConn();
-		//String sql = "select * from _records where sensor_id=? and time like '"+date+"%'";
-		String sql = "select id, min(temperature) as min,max(temperature) as max, sensor_id, time, HOUR(time) as hour from _records where sensor_id=? and time like '"+date+"%' GROUP BY HOUR(time)";
-		PreparedStatement ps = DB.prepare(conn, sql);
-		List<RecordMaxMinInHour> Records = new ArrayList<RecordMaxMinInHour>();
-		try {
-			ps.setString(1, sensor_id);
-			ResultSet rs =  ps.executeQuery();
-			RecordMaxMinInHour r = null;
-			while(rs.next()){
-				//System.out.println(rs.getInt("id")+"\t"+rs.getInt("Record_id"));
-				r = new RecordMaxMinInHour();
-				r.setId(rs.getInt("id"));
-				r.setSensor_id(rs.getString("sensor_id"));
-				r.setMax(rs.getFloat("max"));
-				r.setMin(rs.getFloat("min"));
-				r.setTime(rs.getTime("time"));
-				r.setHour(rs.getInt("hour"));
-				Records.add(r);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DB.close(ps);
-		DB.close(conn);
-		return Records;
-	}
+//	
+//	public List<RecordMaxMinInHour> listMaxAndMin(String sensor_id, String date){
+//		Connection conn = DB.createConn();
+//		//String sql = "select * from _records where sensor_id=? and time like '"+date+"%'";
+//		String sql = "select id, min(temperature) as min,max(temperature) as max, sensor_id, time, HOUR(time) as hour from _records where sensor_id=? and time like '"+date+"%' GROUP BY HOUR(time)";
+//		PreparedStatement ps = DB.prepare(conn, sql);
+//		List<RecordMaxMinInHour> Records = new ArrayList<RecordMaxMinInHour>();
+//		try {
+//			ps.setString(1, sensor_id);
+//			ResultSet rs =  ps.executeQuery();
+//			RecordMaxMinInHour r = null;
+//			while(rs.next()){
+//				//System.out.println(rs.getInt("id")+"\t"+rs.getInt("Record_id"));
+//				r = new RecordMaxMinInHour();
+//				r.setId(rs.getInt("id"));
+//				r.setSensor_id(rs.getString("sensor_id"));
+//				r.setMax(rs.getFloat("max"));
+//				r.setMin(rs.getFloat("min"));
+//				r.setTime(rs.getTime("time"));
+//				r.setHour(rs.getInt("hour"));
+//				Records.add(r);
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		DB.close(ps);
+//		DB.close(conn);
+//		return Records;
+//	}
 	
 	public List<Record> find(String sensor_id){
 		Connection conn = DB.createConn();

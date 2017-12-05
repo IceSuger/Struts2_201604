@@ -230,21 +230,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <th>节点部署纬度</th>
         <th>节点部署经度</th>
 		<th>高温报警线</th>
-		<th>低温报警线</th>
-		<th>部署日期</th>
         <th>操作</th>
     </tr>
 	</thead>
 	<tbody>
-	<s:iterator value="Sensors" var="e">
+	<s:iterator value="teachers" var="t">
     <tr>
-        <td><s:property value="#e.id" /></td>
-        <td class="center"><s:property value="#e.building_name" /></td>
-        <td class="center"><s:property value="#e.latitude" /></td>
-		<td class="center"><s:property value="#e.longitude" /></td>
-		<td class="center"><s:property value="#e.high_limit" /></td>
-		<td class="center"><s:property value="#e.low_limit" /></td>
-		<td class="center"><s:property value="#e.date" /></td>
+        <td><s:property value="#t.uniqueId" /></td>
+        <td class="center"><s:property value="#t.name" /></td>
+        <td class="center"><s:property value="#t.score" /></td>
+		<td class="center"><s:property value="#t.teacherType" /></td>
+		<td class="center"><s:property value="#t.intro" /></td>
+		
         <td class="center">
             <a class="btn btn-success" href="#">
                 <i class="glyphicon glyphicon-zoom-in icon-white"></i>

@@ -186,7 +186,7 @@
 	function findAndShowTeacherWindow(uniqueId, point){
 		//通过ajax向后台请求id代表的老师的简单信息
 		$.ajax({
-        url: "Teacher_find?uniqueId="+uniqueId
+        url: "Teacher_findBrief?uniqueId="+uniqueId
        , type: "GET"
        , success: function( data0, textStatus, jqXHR ){
            // data0 是返回的数据
@@ -204,12 +204,20 @@
 			*/
 			//添加带头像的老师信息窗口
 			var sContent =
-				"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>"+ teacherName + "</h4>" + 
+				//"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>"+ teacherName + "</h4>" + 
+				"<h4 style='margin:0 0 5px 0;padding:0.2em 0'><a href='Teacher_findDetail?uniqueId=" + uniqueId + "' target='_blank'>"  + teacherName + "</a></h4>" + 
 				"<img style='float:right;margin:4px' id='imgDemo' src=" + avatarUrl + " width='64' height='64'/>" + 
 				"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>" + intro + "</p>" + 
 				"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>评价：" + score + " 分</p>" + 
 				"</div>";
 			var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+			// infoWindow.addEventListener('click',function(){
+				// /**
+				// *	添加infoWindow的点击事件，打开老师详情页
+				// */
+				// findAndShowTeacherWindow(point.uniqueId, marker.point);
+				
+			// });
 			map.openInfoWindow(infoWindow,point); //开启信息窗口
 		   }
 	   });

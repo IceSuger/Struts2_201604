@@ -52,16 +52,16 @@
     </package>
     
 	<package name="json" namespace="/" extends="json-default">
-		<action name="Teacher_listPoints" class="heatsupply.action.SensorAction" method="listPoints">
+		<action name="Teacher_listPoints" class="heatsupply.action.TeacherAction" method="listPoints">
 	        <result type="json"></result>
 	    </action>
-	    <action name="Sensor_listPoints" class="heatsupply.action.SensorAction" method="listPoints">
+	    <action name="Teacher_findBrief" class="heatsupply.action.TeacherAction" method="findBrief">
 	        <result type="json"></result>
 	    </action>
-	    <action name="Teacher_find" class="heatsupply.action.SensorAction" method="find">
+		<!-- <action name="Teacher_findDetail" class="heatsupply.action.TeacherAction" method="findDetail">
 	        <result type="json"></result>
-	    </action>
-	    <action name="Sensor_listUnusedIds" class="heatsupply.action.SensorAction" method="listUnusedIds">
+	    </action> -->
+	    <!-- <action name="Sensor_listUnusedIds" class="heatsupply.action.TeacherAction" method="listUnusedIds">
 	        <result type="json"></result>
 	    </action>
 	    <action name="Record_latest" class="heatsupply.action.RecordAction" method="latest">
@@ -71,27 +71,27 @@
 	        <result type="json"></result>
 	    </action>
 	    <action name="Alarm_fetch" class="heatsupply.action.AlarmAction" method="fetch">
-	        <result type="json"></result>
-	    </action>
-	    
+	        <result type="json"></result> 
+	    </action>-->
 	</package>
 	
 	<package name="front" namespace="/" extends="struts-default">
-	    <!-- <action name="sensor_list" class="heatsupply.action.SensorAction" method="list">
+	    <!-- <action name="sensor_list" class="heatsupply.action.TeacherAction" method="list">
 	        <result>/Hello.jsp</result>
 	    </action>
 	     -->
 	     
 	    <action name="*_*" class="heatsupply.action.{1}Action" method="{2}">
+			<result name="teacher_detail">/Teacher_detail.jsp</result>
 	        <result name="show_map">/Map_show.jsp</result>
-	        <result name="Sensor_list" type="chain">Sensor_list</result>
-	        <result name="record_added">/Record_added.jsp</result>
-	        <result name="alarm_list">/Alarm_list.jsp</result>
+	        <!-- <result name="Sensor_list" type="chain">Sensor_list</result> -->
+	        <!-- <result name="record_added">/Record_added.jsp</result> -->
+	        <!-- <result name="alarm_list">/Alarm_list.jsp</result> -->
 	        <result>/{1}_{2}.jsp</result>
 	        <result name="input">/{1}_{2}.jsp</result>
 	    </action>
 	    
-	   <!--  <action name="sensor" class="heatsupply.action.SensorAction">
+	   <!--  <action name="sensor" class="heatsupply.action.TeacherAction">
 	        <result name="list">/Hello.jsp</result>
 	        <result name="adddd_input">/Sensor_add_input.jsp</result>
 	        <result>/Sensor_add_input.jsp</result>
